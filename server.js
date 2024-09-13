@@ -23,11 +23,7 @@ async function main() {
   await mongoose.connect(dbUrl);
 }
 
-
 app.use('' , Routes);
-
-
-
 
 app.listen(8080, () => console.log('Backend server is running on port 8080'));
 

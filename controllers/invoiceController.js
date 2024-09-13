@@ -1,7 +1,7 @@
 const Invoice = require('../models/Invoice');
 
 
-// Create new invoice and return created invoice
+// create new invoice
 exports.createInvoice = async (req, res) => {
   const { date, invoiceNumber, currency, items } = req.body;
 
@@ -27,6 +27,9 @@ exports.createInvoice = async (req, res) => {
   }
 };
 
+
+
+// get all invoices
 exports.getInvoices = async (req, res) => {
   try {
     const invoices = await Invoice.find();
@@ -35,6 +38,10 @@ exports.getInvoices = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+
+
+// get a particular invoice
 exports.getInvoiceById = async (req ,res) => {
   const { id } = req.params;  // Extract invoice id from the request params
 
@@ -50,7 +57,10 @@ exports.getInvoiceById = async (req ,res) => {
     res.status(500).json({ message: error.message });
   }
 };
-// Edit an invoice by ID
+
+
+
+// edit a particular invoice
 exports.editInvoice = async (req, res) => {
   try {
     const invoiceId = req.params.id;
