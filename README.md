@@ -65,7 +65,7 @@ To get started with the backend of this project, follow the steps below:
 
 1. **Clone the Backend Repository**:
    ```bash
-   git clone https://github.com/your-username/invoice-management-backend.git
+   git clone https://github.com/Rohit-Mangasule/Invoice-app-Backend
    cd backend
 
 2. **Install Dependencies: Make sure you have Node.js installed. Install the required dependencies by running:**
