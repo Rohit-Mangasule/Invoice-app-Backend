@@ -41,7 +41,7 @@ exports.getInvoices = async (req, res) => {
 
 
 
-// get a particular invoice
+// get a specific invoice
 exports.getInvoiceById = async (req ,res) => {
   const { id } = req.params;  // Extract invoice id from the request params
 
@@ -60,7 +60,7 @@ exports.getInvoiceById = async (req ,res) => {
 
 
 
-// edit a particular invoice
+// edit a specific invoice
 exports.editInvoice = async (req, res) => {
   try {
     const invoiceId = req.params.id;
