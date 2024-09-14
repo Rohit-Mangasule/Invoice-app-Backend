@@ -18,6 +18,7 @@ exports.createInvoice = async (req, res) => {
   const newInvoice = new Invoice({
     date, invoiceNumber, currency, items, subtotal, totalTaxes, totalAmount
   });
+  
 
   try {
     const savedInvoice = await newInvoice.save();
@@ -62,21 +63,33 @@ exports.getInvoiceById = async (req ,res) => {
 
 // edit a specific invoice
 exports.editInvoice = async (req, res) => {
+  const { items } = req.body;
+
+  // Recalculate subtotal, totalTaxes, and totalAmount
+  let subtotal = 0;
+  let totalTaxes = 0;
+
+  items.forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    subtotal += itemTotal;
+    totalTaxes += item.taxes.reduce((sum, tax) => sum + (itemTotal * tax.rate / 100), 0);
+  });
+
+  const totalAmount = subtotal + totalTaxes;
+
+  const updatedInvoice = {
+    ...req.body,
+    subtotal,
+    totalTaxes,
+    totalAmount
+  };
+
   try {
-    const invoiceId = req.params.id;
-    const updatedInvoice = req.body;
-
-    // Assuming you are using a database update query here
-    const result = await Invoice.findByIdAndUpdate(invoiceId, updatedInvoice, { new: true });
-
-    if (!result) {
-      return res.status(404).json({ message: 'Invoice not found' });
-    }
-
+    const result = await Invoice.findByIdAndUpdate(req.params.id, updatedInvoice, { new: true });
     res.json(result);
   } catch (error) {
-    console.error('Error updating invoice:', error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).json({ error: 'Error updating invoice' });
   }
-};
+}
+
 
