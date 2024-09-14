@@ -15,7 +15,7 @@ exports.createInvoice = async (req, res) => {
 
   const totalAmount = subtotal + totalTaxes;
 
-  const newInvoice = new invoice({
+  const newInvoice = new Invoice({
     date, invoiceNumber, currency, items, subtotal, totalTaxes, totalAmount
   });
 
